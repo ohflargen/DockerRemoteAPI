@@ -46,6 +46,9 @@ public class Container {
 					
 					// Combine all configuration data
 					object.put("Config", cObject);
+				} else {
+					aObject.put("PublishAllPorts", true); // publish all internal ports to random container ports
+					object.put("HostConfig", aObject);
 				}
 
 			} catch (Exception e) {
