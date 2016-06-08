@@ -28,15 +28,19 @@ public class ProcessRequest extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.getWriter().append("<br>Tomcat: ").append(request.getParameter("tomcat"));
-		response.getWriter().append("<br>Redis: ").append(request.getParameter("redis"));
-		response.getWriter().append("<br>Mongo: ").append(request.getParameter("mongo"));
-		response.getWriter().append("<br>UID: ").append(request.getParameter("UID"));
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("<table><tr><td>Service:</td><td>Container Name:</td></tr>");
+		//response.getWriter().append("<br>UID: ").append(request.getParameter("UID"));
 		
 		Container c = new Container(); 
 
 		if (request.getParameter("tomcat") != null){
+
+			response.getWriter().append("<tr><td>");
+			response.getWriter().append("Tomcat: ").append(request.getParameter("tomcat"));
+			response.getWriter().append("</td><td>");
+			response.getWriter().append(request.getParameter("UID")+"_tomcat");
+			response.getWriter().append("</td></tr>");
 			
 			c.create(request.getParameter("UID")+"_tomcat", "tomcat", "http://192.168.1.97:4243");
 			c.start(request.getParameter("UID")+"_tomcat","http://192.168.1.97:4243");
@@ -45,6 +49,12 @@ public class ProcessRequest extends HttpServlet {
 		
 		if (request.getParameter("redis") != null){
 			
+			response.getWriter().append("<tr><td>");
+			response.getWriter().append("Redis: ").append(request.getParameter("redis"));
+			response.getWriter().append("</td><td>");
+			response.getWriter().append(request.getParameter("UID")+"_redis");
+			response.getWriter().append("</td></tr>");
+			
 			c.create(request.getParameter("UID")+"_redis", "redis", "http://192.168.1.97:4243");
 			c.start(request.getParameter("UID")+"_redis","http://192.168.1.97:4243");
 			
@@ -52,11 +62,18 @@ public class ProcessRequest extends HttpServlet {
 
 		if (request.getParameter("mongo") != null){
 	
+			response.getWriter().append("<tr><td>");
+			response.getWriter().append("Mongo: ").append(request.getParameter("mongo"));
+			response.getWriter().append("</td><td>");
+			response.getWriter().append(request.getParameter("UID")+"_mongo");
+			response.getWriter().append("</td></tr>");
+			
 			c.create(request.getParameter("UID")+"_mongo", "mongo", "http://192.168.1.97:4243");
 			c.start(request.getParameter("UID")+"_mongo","http://192.168.1.97:4243");
 	
 		}
 		
+		response.getWriter().append("</table>");
 	}
 
 	/**

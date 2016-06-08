@@ -9,8 +9,10 @@ public class GenerateUID {
 	public String getUID(){
 		//generate random UUIDs
 	    UUID uid = UUID.randomUUID();
+	    Long us = uid.getMostSignificantBits();
+	    Long aus = Math.abs(us);
 	    
-	    return uid.toString();
+	    return aus.toString();
 	}
 
 }

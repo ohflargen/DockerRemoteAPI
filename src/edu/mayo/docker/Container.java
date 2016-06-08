@@ -14,7 +14,13 @@ public class Container {
 	
 	// Create a Container from an Image
 	public int create(String name, String image, String host){
-			
+
+		try {
+		    Thread.sleep(2000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+
 			int ri = 0;
 			
 			JSONObject object = new JSONObject();
@@ -79,6 +85,12 @@ public class Container {
 	// Start a Container that has already been created
 	public int start(String name, String host){
 		int ri = 0;
+		
+		try {
+		    Thread.sleep(2000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
 		
 		try {
 
