@@ -1,12 +1,24 @@
 package edu.mayo.docker;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import edu.mayo.utils.ParseJson;
 
 public class Container {
 
@@ -125,10 +137,79 @@ public class Container {
 		        System.out.println("Response Code : " 
 		                + response.getStatusLine().getStatusCode());
 		        ri = response.getStatusLine().getStatusCode();
+		        
 		
 		} catch (Exception ex){
 			System.out.println(ex);
 		}
 		return ri;
+	}
+	
+	public String getPort(){
+		
+		//String host = "http://192.168.1.97:4243/containers/json?all=1&before=c82af883874d&size=1";
+		String host = "http://192.168.1.97:4243/containers/c82af883874d/json";
+		String port = "";
+		
+			HttpClient client = new DefaultHttpClient();
+		    HttpGet request = new HttpGet(host);
+		    HttpResponse response;
+		    String result = null;
+		    try {
+		        response = client.execute(request);         
+		        HttpEntity entity = response.getEntity();
+
+		        if (entity != null) {
+
+		            // A Simple JSON Response Read
+		            InputStream instream = entity.getContent();
+		            result = convertStreamToString(instream);
+		            // now you have the string representation of the HTML request
+		            System.out.println("RESPONSE: " + result);
+		            instream.close();
+
+		            String jsonString = result;
+		            JSONObject jsonObject = new JSONObject();
+
+		        ParseJson pj = new ParseJson();
+		        pj.parseString("["+result+"]");
+		        
+		        }
+		        // Headers
+		        org.apache.http.Header[] headers = response.getAllHeaders();
+		        for (int i = 0; i < headers.length; i++) {
+		            System.out.println(headers[i]);
+		        }
+		    } catch (ClientProtocolException e1) {
+		        // TODO Auto-generated catch block
+		        e1.printStackTrace();
+		    } catch (IOException e1) {
+		        // TODO Auto-generated catch block
+		        e1.printStackTrace();
+		    }
+		    
+		return port;
+	}
+	
+	private static String convertStreamToString(InputStream is) {
+
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+	    StringBuilder sb = new StringBuilder();
+
+	    String line = null;
+	    try {
+	        while ((line = reader.readLine()) != null) {
+	            sb.append(line + "\n");
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            is.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return sb.toString();
 	}
 }

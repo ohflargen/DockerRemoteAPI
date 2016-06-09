@@ -19,8 +19,10 @@
 %>
 <table>
 <tr><td>Tomcat: </td><td><input type="checkbox" name="tomcat"></td></tr>
+<tr><td>Node.js: </td><td><input type="checkbox" name="node"></td></tr>
 <tr><td>Redis: </td><td><input type="checkbox" name="redis"></td></tr>
 <tr><td>Mongo: </td><td><input type="checkbox" name="mongo"></td></tr>
+<tr><td>MySQL: </td><td><input type="checkbox" name="mysql"></td></tr>
 <tr colspan="2"><td>
 <input type="submit" value="Submit">
 </td></tr>

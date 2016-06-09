@@ -37,7 +37,7 @@ public class ProcessRequest extends HttpServlet {
 		if (request.getParameter("tomcat") != null){
 
 			response.getWriter().append("<tr><td>");
-			response.getWriter().append("Tomcat: ").append(request.getParameter("tomcat"));
+			response.getWriter().append("Tomcat: ");
 			response.getWriter().append("</td><td>");
 			response.getWriter().append(request.getParameter("UID")+"_tomcat");
 			response.getWriter().append("</td></tr>");
@@ -47,10 +47,23 @@ public class ProcessRequest extends HttpServlet {
 			
 		}
 		
+		if (request.getParameter("node") != null){
+
+			response.getWriter().append("<tr><td>");
+			response.getWriter().append("Node.js: ");
+			response.getWriter().append("</td><td>");
+			response.getWriter().append(request.getParameter("UID")+"_node");
+			response.getWriter().append("</td></tr>");
+			
+			c.create(request.getParameter("UID")+"_node", "node", "http://192.168.1.97:4243");
+			c.start(request.getParameter("UID")+"_node","http://192.168.1.97:4243");
+			
+		}
+
 		if (request.getParameter("redis") != null){
 			
 			response.getWriter().append("<tr><td>");
-			response.getWriter().append("Redis: ").append(request.getParameter("redis"));
+			response.getWriter().append("Redis: ");
 			response.getWriter().append("</td><td>");
 			response.getWriter().append(request.getParameter("UID")+"_redis");
 			response.getWriter().append("</td></tr>");
@@ -63,7 +76,7 @@ public class ProcessRequest extends HttpServlet {
 		if (request.getParameter("mongo") != null){
 	
 			response.getWriter().append("<tr><td>");
-			response.getWriter().append("Mongo: ").append(request.getParameter("mongo"));
+			response.getWriter().append("Mongo: ");
 			response.getWriter().append("</td><td>");
 			response.getWriter().append(request.getParameter("UID")+"_mongo");
 			response.getWriter().append("</td></tr>");
@@ -73,6 +86,19 @@ public class ProcessRequest extends HttpServlet {
 	
 		}
 		
+		if (request.getParameter("mysql") != null){
+			
+			response.getWriter().append("<tr><td>");
+			response.getWriter().append("MySQL: ");
+			response.getWriter().append("</td><td>");
+			response.getWriter().append(request.getParameter("UID")+"_mysql");
+			response.getWriter().append("</td></tr>");
+			
+			c.create(request.getParameter("UID")+"_mysql", "mysql", "http://192.168.1.97:4243");
+			c.start(request.getParameter("UID")+"_mysql","http://192.168.1.97:4243");
+	
+		}
+
 		response.getWriter().append("</table>");
 	}
 
